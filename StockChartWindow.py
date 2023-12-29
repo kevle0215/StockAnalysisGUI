@@ -11,7 +11,7 @@ import SupportResistance
 import matplotlib.colors as mcolors
 
 
-def open_new_window(master, stock_name, start_date, end_date, interval):
+def open_new_window(master, stock_name, start_date, end_date, interval, touches, sensitivity):
 
     # create new window
     newWindow = tk.Toplevel(master)
@@ -29,7 +29,7 @@ def open_new_window(master, stock_name, start_date, end_date, interval):
     chart_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
     # fill stock chart with data
-    stock_chart_with_scrollbar(stock_name, start_date, end_date, interval, ax)
+    stock_chart_with_scrollbar(stock_name, start_date, end_date, interval, ax, touches, sensitivity)
 
     # place cursor on stock chart
     cursor = mplcursors.cursor(hover=True)
@@ -37,7 +37,7 @@ def open_new_window(master, stock_name, start_date, end_date, interval):
         f"{mdates.num2date(sel.target[0]).strftime('%Y-%m-%d %H:%M:%S')}\nPrice: {sel.target[1]:.2f}"))
 
 
-def stock_chart_with_scrollbar(symbol, start_date, end_date, interval, ax):
+def stock_chart_with_scrollbar(symbol, start_date, end_date, interval, ax, touches, sensitivity):
 
     # price data
     data = yf.download(symbol, start=start_date, end=end_date, interval=interval)
@@ -57,11 +57,11 @@ def stock_chart_with_scrollbar(symbol, start_date, end_date, interval, ax):
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
     plt.xticks(rotation=45)
 
-    support_resistance_graph(symbol, start_date, end_date, interval, ax, ohlc)
+    support_resistance_graph(symbol, start_date, end_date, interval, ax, ohlc, touches, sensitivity)
 
 
-def support_resistance_graph(symbol, start_date, end_date, interval, ax, data):
-    srArray = SupportResistance.support_resistance(symbol, start_date, end_date, interval)
+def support_resistance_graph(symbol, start_date, end_date, interval, ax, data, touches, sensitivity):
+    srArray = SupportResistance.support_resistance(symbol, start_date, end_date, interval, touches, sensitivity)
 
     for sr in srArray:
 
