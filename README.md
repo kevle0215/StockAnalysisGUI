@@ -36,6 +36,7 @@
 * Python
   * tkinter
   * yfinance
+  * unittest/mock
 * SQL
   * sqlite3
 
@@ -94,6 +95,7 @@ Run the `UpdateSupportResistance.py` script after every live market session to u
 1. Individual stock support and resistance analysis paired visually with candlestick stock chart.
 2. Storing of all support and resistance zones in SQL database for easy access.
 3. Notification and update scripts to notify users of a stock's closeness to a support or resistance zone.
+4. Contains test files for code related to the notification system. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
