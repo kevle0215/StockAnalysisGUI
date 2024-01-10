@@ -3,8 +3,15 @@ import os
 import time
 import datetime
 import yfinance as yf
-from GetPrice import get_current_price
-from datetime import date, timedelta, datetime
+import sys
+import os
+
+# Get the directory of the script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(script_dir, '..'))
+
+from src.GetPrice import get_current_price
+from datetime import timedelta, datetime
 
 def send_notification(title, message):
     """
@@ -145,7 +152,7 @@ def notification_setup():
         print(f"An unexpected error occurred: {e}")
 
 
-def broken_support(symbol, old_value):
+def broken_support(symbol, old_value, db_connection = None):
     """
     Adjusts support and resistance values when the current price falls below the support level.
 
@@ -171,8 +178,9 @@ def broken_support(symbol, old_value):
         lowest_price = stock_data['Close'].min()
 
         new_value = lowest_price
-
-    with sqlite3.connect('stock_data.db') as conn:
+    
+    db_connection = db_connection or sqlite3.connect('stock_data.db')
+    with db_connection as conn:
 
         # Update the support and resistance values
         update_value(conn, symbol, 'support', new_value)

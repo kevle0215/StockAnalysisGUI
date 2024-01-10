@@ -11,7 +11,7 @@ class AddSR:
         value_var (StringVar): Variable to store support/resistance value input.
     """
 
-    def __init__(self, master):
+    def __init__(self, master, db_connection = None):
         """
         Initializes the AddSR window.
         
@@ -24,6 +24,9 @@ class AddSR:
         self.value_var = tk.StringVar()
 
         self.create_widgets()
+
+        # testing purposes
+        self.db_connection = db_connection or sqlite3.connect('stock_data.db')
 
     def create_widgets(self):
         """
@@ -62,7 +65,7 @@ class AddSR:
             Warning: If the support/resistance level already exists or has been deleted.
         """
         try:
-            with sqlite3.connect('stock_data.db') as conn:
+            with self.db_connection as conn:
                 cursor = conn.cursor()
 
                 # Fetch existing values for the specified stock symbol
@@ -94,7 +97,7 @@ class AddSR:
             Warning: If the support/resistance level already deleted or has been added.
         """
         try:
-            with sqlite3.connect('stock_data.db') as conn:
+            with self.db_connection as conn:
                 cursor = conn.cursor()
 
                 # Fetch existing values for the specified stock symbol

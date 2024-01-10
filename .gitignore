@@ -2,3 +2,6 @@ Test.py
 __pycache__/
 .idea/
 .DS_Store
+:memory
+.vscode/
+.pytest_cache/

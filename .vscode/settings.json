@@ -1,6 +1,3 @@
 {
-    "python.analysis.extraPaths": [
-        "./src/tkinterwindows",
-        "./src"
-    ]
+    "python.analysis.extraPaths": ["./src"]
 }
